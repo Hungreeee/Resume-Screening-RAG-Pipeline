@@ -1,16 +1,18 @@
-import langchain
-from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain.prompts import PromptTemplate
+from langchain_openai import ChatOpenAI
+
+from llm_utils import generate_response, generate_subquestions
 
 
 FAISS_PATH = "./vectorstore"
+RAG_K_THRESHOLD = 30
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-LLM_MODEL = ""
+LLM_MODEL = "gpt-3.5-turbo"
+OPENAI_KEY = ""
 
 
-def reciprocal_rank_fusion(document_rank_list: list[list], k=50):
+def reciprocal_rank_fusion(document_rank_list: list[dict], k=50):
   fused_scores = {}
   for doc_list in document_rank_list:
     for rank, (doc, score) in enumerate(doc_list.items()):
@@ -28,9 +30,13 @@ def retrieve_docs(question: str, k=3):
   return docs_score
 
 
-def re():
+def retrieve_and_rerank(subquestion_list: list):
+  document_rank_list = []
+  for subquestion in subquestion_list:
+    document_rank_list.append(retrieve_docs(subquestion, RAG_K_THRESHOLD))
   
-  return
+  reranked_documents = reciprocal_rank_fusion(document_rank_list)
+  return reranked_documents
 
 
 if __name__ == "__main__":
@@ -38,7 +44,12 @@ if __name__ == "__main__":
     model_name=EMBEDDING_MODEL,
     model_kwargs={"device": "cpu"},
   )
+  llm = ChatOpenAI(model=LLM_MODEL, temperature=0.1, openai_api_key=OPENAI_KEY)
   vectorstore_db = FAISS.load_local(FAISS_PATH, embedding_model)
-  docs = retrieve_docs("Data Science") 
-  
-  print(reciprocal_rank_fusion([docs]))
+
+  while True:
+    question = str(input("Question: "))
+    subquestion_list = generate_subquestions(llm, question)
+    document_list = retrieve_and_rerank(subquestion_list)
+    response = generate_response(llm, question, document_list)
+    print(response)
