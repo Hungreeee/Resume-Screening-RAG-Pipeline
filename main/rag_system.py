@@ -9,9 +9,9 @@ from langchain_openai import ChatOpenAI
 from llm_utils import generate_response, generate_subquestions
 
 
-DATA_PATH = "./data/alt-cleaned_resume.csv"
-FAISS_PATH = "./alt-vectorstore"
-RAG_K_THRESHOLD = 2
+DATA_PATH = "./data/main-data/synthetic-resumes.csv"
+FAISS_PATH = "./vectorstore"
+RAG_K_THRESHOLD = 5
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 LLM_MODEL = "gpt-35-turbo"
 OPENAI_ENDPOINT = "https://aalto-openai-apigw.azure-api.net"
@@ -36,7 +36,6 @@ def reciprocal_rank_fusion(document_rank_list: list[dict], k=50):
 
 def retrieve_docs_id(question: str, k=3):
   docs_score = vectorstore_db.similarity_search_with_score(question, k=k)
-  print(docs_score)
   docs_score = {str(doc.metadata["ID"]): score for doc, score in docs_score}
   return docs_score
 
@@ -66,7 +65,7 @@ if __name__ == "__main__":
 
   llm = ChatOpenAI(
     default_headers={"Ocp-Apim-Subscription-Key": OPENAI_KEY},
-    base_url="https://aalto-openai-apigw.azure-api.net",
+    base_url=OPENAI_ENDPOINT,
     api_key=False,
     http_client=httpx.Client(
       event_hooks={
@@ -74,13 +73,15 @@ if __name__ == "__main__":
     }),
   )
 
-  vectorstore_db = FAISS.load_local(FAISS_PATH, embedding_model, distance_strategy=DistanceStrategy.COSINE)
-  id_list = retrieve_id_and_rerank(["Find front-end developer with experience in database management."])
-  doc_list = retrieve_documents_with_id(documents, id_list)
+  question = ""
 
-  while True:
-    question = str(input("Question: "))
-    subquestion_list = generate_subquestions(llm, question)
-    document_list = retrieve_and_rerank(subquestion_list)
-    response = generate_response(llm, question, document_list)
-    print(response)
+  vectorstore_db = FAISS.load_local(FAISS_PATH, embedding_model, distance_strategy=DistanceStrategy.COSINE)
+  subquestion_list = generate_subquestions(llm, question)
+  print(subquestion_list)
+  print("===================================")
+  # id_list = retrieve_id_and_rerank(subquestion_list)
+  # document_list = retrieve_documents_with_id(documents, id_list)
+  # for document in document_list:
+  #   print(document)
+  #   print("===================================")
+  # response = generate_response(llm, question, document_list)

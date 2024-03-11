@@ -1,45 +1,108 @@
 import sys
 sys.dont_write_bytecode = True
 
-from langchain.chains import LLMChain
-from langchain.prompts.chat import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
+from langchain.schema import HumanMessage, SystemMessage, AIMessage
 
 
 def generate_response(llm, question: str, docs: list):
   context = "\n\n".join(doc for doc in docs)
   
-  system_prompt_template = SystemMessagePromptTemplate.from_template("""
-    You are an expert in talent acquisition that helps to determine the best candidates given their resumes as context.
-    Use the following pieces of context to answer the user's question. If you don't know the answer, just say that you don't know, do not try to make up an answer.
-    Only return the helpful answer below and nothing else.
+  system_message = SystemMessage(content="""
+    You are an expert in talent acquisition that helps determine the best candidate among multiple suitable resumes.
+    Use the following pieces of context to determine the best resume given a job description. 
+    You should provide some detailed explanations for the best resume choice. Make sure to also return a detailed summary of the original text of the best resume.
+    Because there can be applicants with similar names, use the applicant ID to refer to resumes in your response. 
+    If you don't know the answer, just say that you don't know, do not try to make up an answer.
   """)
-  user_prompt_template = HumanMessagePromptTemplate.from_template("""
+  user_message = HumanMessage(content=f"""
     Context: {context}
     Question: {question}
-    Answer:
   """)
-  
-  prompt_template = ChatPromptTemplate.from_messages([system_prompt_template, user_prompt_template])
-  chain = LLMChain(llm=llm, prompt=prompt_template)
 
-  response = chain.invoke({"context": context, "question": question})
-  return response
+  response = llm.invoke([system_message, user_message])
+  return response.content
 
 
 def generate_subquestions(llm, question: str):
-  system_prompt_template = SystemMessagePromptTemplate.from_template("""
-    You are an expert in talent acquisition that generates sub-queries covering smaller but more focused aspects of the initial complex input job query.
-    Only use the information provided in the initial query.                                                            
+  system_message = SystemMessage(content="""
+    You are an expert in talent acquisition. Separate this job description into 3-4 more focused aspects for efficient resume retrieval. 
+    Make sure every single relevant aspect of the query is covered in at least one query. You may choose to remove irrelevant information that doesn't contribute to finding resumes such as the expected salary of the job, the ID of the job, the duration of the contract, etc.
+    Only use the information provided in the initial query. Do not make up any requirements of your own.
+    Put each result in one line, separated by a linebreak.
     """)
-  user_prompt_template = HumanMessagePromptTemplate.from_template("""
-    Generate 3 to 4 sub-queries based on this initial query and put all of the sub-queries in one line, separated by a semicolon: {question}
-    Answer:
+  
+  user_message = HumanMessage(content=f"""
+    Generate 3 to 4 sub-queries based on this initial job description: 
+    {question}
   """)
-  
-  prompt_template = ChatPromptTemplate.from_messages([system_prompt_template, user_prompt_template])
-  chain = LLMChain(llm, prompt_template)
 
-  response = chain.invoke({"question": question})
-  
-  generated_queries = response["content"].strip().split(";")
-  return generated_queries  
+  oneshot_example = HumanMessage(content="""
+    Generate 3 to 4 sub-queries based on this initial job description:
+
+    Wordpress Developer
+    We are looking to hire a skilled WordPress Developer to design and implement attractive and functional websites and Portals for our Business and Clients. You will be responsible for both back-end and front-end development including the implementation of WordPress themes and plugins as well as site integration and security updates.
+    To ensure success as a WordPress Developer, you should have in-depth knowledge of front-end programming languages, a good eye for aesthetics, and strong content management skills. Ultimately, a top-class WordPress Developer can create attractive, user-friendly websites that perfectly meet the design and functionality specifications of the client.
+    WordPress Developer Responsibilities:
+    Meeting with clients to discuss website design and function.
+    Designing and building the website front-end.
+    Creating the website architecture.
+    Designing and managing the website back-end including database and server integration.
+    Generating WordPress themes and plugins.
+    Conducting website performance tests.
+    Troubleshooting content issues.
+    Conducting WordPress training with the client.
+    Monitoring the performance of the live website.
+    WordPress Developer Requirements:
+    Bachelors degree in Computer Science or a similar field.
+    Proven work experience as a WordPress Developer.
+    Knowledge of front-end technologies including CSS3, JavaScript, HTML5, and jQuery.
+    Knowledge of code versioning tools including Git, Mercurial, and SVN.
+    Experience working with debugging tools such as Chrome Inspector and Firebug.
+    Good understanding of website architecture and aesthetics.
+    Ability to project manage.
+    Good communication skills.
+    Contract length: 12 months
+    Expected Start Date: 9/11/2020
+    Job Types: Full-time, Contract
+    Salary: 12,004.00 - 38,614.00 per month
+    Schedule:
+    Flexible shift
+    Experience:
+    Wordpress: 3 years (Required)
+    web designing: 2 years (Required)
+    total work: 3 years (Required)
+    Education:
+    Bachelor's (Preferred)
+    Work Remotely:
+    Yes
+  """)
+
+  oneshot_response = AIMessage(content="""
+    1. WordPress Developer Skills:
+      - WordPress, front-end technologies (CSS3, JavaScript, HTML5, jQuery), debugging tools (Chrome Inspector, Firebug), code versioning tools (Git, Mercurial, SVN).
+      - Required experience: 3 years in WordPress, 2 years in web designing.
+   
+    2. WordPress Developer Responsibilities:
+      - Meeting with clients for website design discussions.
+      - Designing website front-end and architecture.
+      - Managing website back-end including database and server integration.
+      - Generating WordPress themes and plugins.
+      - Conducting website performance tests and troubleshooting content issues.
+      - Conducting WordPress training with clients and monitoring live website performance.
+
+    3. WordPress Developer Other Requirements:
+      - Education requirement: Bachelor's degree in Computer Science or similar field.
+      - Proven work experience as a WordPress Developer.
+      - Good understanding of website architecture and aesthetics.
+      - Ability to project manage and strong communication skills.
+
+    4. Skills and Qualifications:
+      - Degree in Computer Science or related field.
+      - Proven experience in WordPress development.
+      - Proficiency in front-end technologies and debugging tools.
+      - Familiarity with code versioning tools.
+      - Strong communication and project management abilities.
+  """)
+
+  response = llm.invoke([system_message, oneshot_example, oneshot_response, user_message])
+  return response.content
