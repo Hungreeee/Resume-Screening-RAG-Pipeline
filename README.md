@@ -10,5 +10,7 @@ The system employs RAG Fusion, an advanced RAG framework that combines generativ
 
 The process begins by processing resumes into a vector storage. Upon receiving the input job descriptions query, the LLM agent is prompted to generate sub-queries. The vector storage then performs a retrieval process for each given query to return the top-K most similar documents. The document list for each sub-query is combined and re-ranked into a new ranked document list. This document set is then augmented into an LLM agent for the subsequent generative process. The LLM then utilizes the retrieved applicants’ information as context to form accurate, relevant, and informative responses to assist hiring managers in grasping the context of the applicants more efficiently.
 
+Tech stacks: `langchain`, `FAISS`, `openai`.
+
 # Evaluation
 
