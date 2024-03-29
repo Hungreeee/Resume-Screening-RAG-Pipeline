@@ -8,7 +8,7 @@ The system employs RAG Fusion, an advanced RAG framework that combines generativ
 
 ![system-structure](https://github.com/Hungreeee/Resume-Screening-LLM-RAG/assets/46376260/b108cbda-81fa-495c-b2a6-c3a279310bf6)
 
-The process begins by processing resumes into a vector storage for knowledge construction. Upon receiving the input job descriptions query, the LLM agent is prompted to generate sub-queries. The vector storage then performs a retrieval process for each given query to return the top-K most similar documents. The document list for each sub-query is combined and re-ranked into a new ranked document list. This document set is then augmented into an LLM agent for the subsequent generative process. The LLM then utilizes the retrieved applicants’ information as context to form accurate, relevant, and informative responses to assist hiring managers in grasping the context of the applicants more efficiently.
+The process begins by processing resumes into a vector storage. Upon receiving the input job descriptions query, the LLM agent is prompted to generate sub-queries. The vector storage then performs a retrieval process for each given query to return the top-K most similar documents. The document list for each sub-query is combined and re-ranked into a ranked document list. This document set is then augmented into an LLM agent for the generative process. The LLM then utilizes the retrieved applicants' information as context to form accurate, relevant, and informative responses to assist hiring managers in matching resumes with job descriptions.
 
 Tech stacks: `langchain`, `FAISS`, `openai`.
 
