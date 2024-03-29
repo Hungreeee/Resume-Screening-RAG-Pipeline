@@ -1,6 +1,6 @@
 # Introduction
 
-A solution to provide a more transparent, intuitive, and efficient working tool to hiring managers in resume matching and analysis among thousands of resumes is necessary. The overall goal is to propose a proof of concept (POC) of an LLM-based assistant to aid hiring managers in screening resumes more efficiently through question-answering. The key design is to integrate Retrieval Augmented Generation (RAG) to effectively retrieve the top matching resumes from a large pool of applicants and augment them to the LLM's knowledge base, which enables the generation of high-level, accurate, and relevant responses about the applicants to the recruiter's queries. This proposed system hopefully can demonstrate the feasibility and effectiveness of a proof of concept which contributes a potential solution to resume matching and analysis for hiring managers in the screening process.
+The overall goal is to propose a proof of concept (POC) of an LLM-based assistant to aid hiring managers in screening resumes more efficiently through question-answering. The key design is to integrate Retrieval Augmented Generation (RAG) to effectively retrieve the top matching resumes from a large pool of applicants and augment them to the LLM's knowledge base, which enables the generation of high-level, accurate, and relevant responses about the applicants to the recruiter's queries.
 
 # Proprosed POC
 
