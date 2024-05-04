@@ -1,4 +1,4 @@
-# Resume Screening Chatbot using RAG 
+# RAG-based Resume Screening Chatbot   
 
 ## Introduction
 
