@@ -4,7 +4,16 @@ The overall goal is to propose a proof of concept (POC) of an LLM-based assistan
 
 # Demo
 
-Nothing here yet...
+The app will be hosted soon.
+
+```
+streamlit run demo/interface.py
+```
+
+![Screenshot_118](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/11c78009-af1e-4cab-9617-2a16e618e7d3)
+
+![Screenshot_119](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/991aee26-af7c-440f-b050-f5789aff3d84)
+
 
 # Proprosed POC
 
