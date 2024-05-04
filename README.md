@@ -23,7 +23,7 @@ The process begins by processing resumes into a vector storage. Upon receiving t
 Tech stacks: 
 - `langchain`, `openai`: Chatbot construction.
 - `faiss`: Vector indexing and similarity retrieval.
-- `streamlit`: Interface development.
+- `streamlit`: Chatbot interface development.
 
 ## Installation and Setup
 
