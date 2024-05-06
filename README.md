@@ -6,9 +6,9 @@ The project is a proof of concept (POC) of an LLM-based assistant to help hiring
 
 ## Demo
 
-The app will be hosted soon.
+The demo interface of the chatbot can be found here: https://resume-screening-rag-gpt.streamlit.app
 
-Warning! The file uploader is still quite unstable. I don't recommend using it.
+**Warning: the file uploader is still quite unstable in Streamlit deployment. I don't recommend using it.**
 
 ![Screenshot_118](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/11c78009-af1e-4cab-9617-2a16e618e7d3)
 
