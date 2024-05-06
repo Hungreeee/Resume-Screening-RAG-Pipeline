@@ -85,8 +85,8 @@ If you are interested, please don't hesitate to give me a star. ⭐
 """
 
 
-st.set_page_config(page_title="Resume Screening Chatbot")
-st.title("Resume Screening Chatbot")
+st.set_page_config(page_title="Resume Screening GPT")
+st.title("Resume Screening GPT")
 
 if "chat_history" not in st.session_state:
   st.session_state.chat_history = [AIMessage(content=welcome_message)]
