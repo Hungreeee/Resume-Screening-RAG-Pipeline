@@ -38,6 +38,8 @@ This data is then augmented into an LLM generator for downstream tasks such as a
 2. Type in a job description query. 💬
 
 Hint: The knowledge base of the LLM has been loaded with a pre-existing vectorstore of resumes to be used right away. 
+In addition, you may also find example job descriptions to test [here](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/blob/main/data/supplementary-data/job_title_des.csv).
+
 Please make sure to check the sidebar for more useful information. 💡
 """
 
@@ -205,12 +207,13 @@ if user_query is not None and user_query != "":
     query_type = llm.query_classification(user_query)
 
     if query_type == "1":
-      subquestion_list = llm.generate_subquestions(user_query) if st.session_state.rag_selection == "RAG Fusion" else [user_query]
-      id_list = rag_pipeline.retrieve_id_and_rerank(subquestion_list)
-      document_list = rag_pipeline.retrieve_documents_with_id(id_list)
-      st.session_state.resume_list = document_list
+      with st.spinner("Generating answers..."):
+        subquestion_list = llm.generate_subquestions(user_query) if st.session_state.rag_selection == "RAG Fusion" else [user_query]
+        id_list = rag_pipeline.retrieve_id_and_rerank(subquestion_list)
+        document_list = rag_pipeline.retrieve_documents_with_id(id_list)
+        st.session_state.resume_list = document_list
+        stream_message = llm.generate_message_stream(user_query, document_list, [], query_type)
 
-      stream_message = llm.generate_message_stream(user_query, document_list, [], query_type)
       response = st.write_stream(stream_message)
 
       retriever_message = retriever_report
