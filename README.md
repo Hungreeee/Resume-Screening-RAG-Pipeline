@@ -1,22 +1,42 @@
-# Introduction
+# RAG-based Resume Screening Chatbot   
 
-The overall goal is to propose a proof of concept (POC) of an LLM-based assistant to aid hiring managers in screening resumes more efficiently through question-answering. The key design is to integrate Retrieval Augmented Generation (RAG) to effectively retrieve the top matching resumes from a large pool of applicants and augment them to the LLM's knowledge base, which enables the generation of high-level, accurate, and relevant responses about the applicants to the recruiter's queries.
+## Introduction
 
-# Demo
+The project is a proof of concept (POC) of an LLM-based assistant to help hiring managers screen resumes more efficiently. The key design integrates Retrieval Augmented Generation (RAG) Fusion to effectively retrieve the top matching resumes from a large pool of applicants for a job description. This data is then augmented into the LLM for downstream tasks like analysis, summarization, or decision-making. 
 
-Nothing here yet...
+## Demo
 
-# Proprosed POC
+The app will be hosted soon.
 
-The system employs RAG Fusion, an advanced RAG framework that combines generative agents and similarity-based retrieval methods to enhance answer quality. This is particularly useful in resume screening, where queries often contain complex and multifaceted job requirements.
+Warning! The file uploader is still quite unstable. I don't recommend using it.
+
+![Screenshot_118](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/11c78009-af1e-4cab-9617-2a16e618e7d3)
+
+![Screenshot_119](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/991aee26-af7c-440f-b050-f5789aff3d84)
+
+## Pipeline Structure
+
+The system uses RAG Fusion, an advanced RAG framework that combines generative agents and similarity-based retrieval methods to enhance answer quality. This is particularly useful in resume screening, where queries often contain complex and multifaceted job requirements.
 
 ![system-structure](https://github.com/Hungreeee/Resume-Screening-LLM-RAG/assets/46376260/b108cbda-81fa-495c-b2a6-c3a279310bf6)
 
-The process begins by processing resumes into a vector storage. Upon receiving the input job descriptions query, the LLM agent is prompted to generate sub-queries. The vector storage then performs a retrieval process for each given query to return the top-K most similar documents. The document list for each sub-query is combined and re-ranked into a ranked document list. This document set is then augmented into an LLM agent for the generative process. The LLM then utilizes the retrieved applicants' information as context to form accurate, relevant, and informative responses to assist hiring managers in matching resumes with job descriptions.
+The process begins by processing resumes into a vector storage. Upon receiving the input job descriptions query, the LLM agent is prompted to generate sub-queries. The vector storage then performs a retrieval process for each given query to return the top-K most similar documents. The document list for each sub-query is then combined and re-ranked into a new list, representing the most similar documents to the original job description. The LLM then utilizes the retrieved applicants' information as context to form accurate, relevant, and informative responses to assist hiring managers in matching resumes with job descriptions.
 
-Tech stacks: `langchain`, `FAISS`, `openai`.
+Tech stacks: 
+- `langchain`, `openai`: Chatbot construction.
+- `faiss`: Vector indexing and similarity retrieval.
+- `streamlit`: Chatbot interface development.
 
-# Evaluation
+## Installation and Setup
 
-Nothing here yet...
+To install the project:
+```
+git clone https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline.git
+pip install requirements.txt
+```
+
+To run the program locally:
+```
+streamlit run demo/interface.py
+```
 
