@@ -8,3 +8,4 @@ openai==1.25.2
 pandas==2.2.2
 streamlit==1.34.0
 streamlit_modal==0.1.2
+sentence-transformers==2.2.2
