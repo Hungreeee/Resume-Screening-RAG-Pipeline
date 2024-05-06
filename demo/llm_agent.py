@@ -3,7 +3,6 @@ sys.dont_write_bytecode = True
 
 from langchain_openai import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
-from langchain_core.output_parsers import StrOutputParser
 
 
 DATA_PATH = "./data/main-data/synthetic-resumes.csv"

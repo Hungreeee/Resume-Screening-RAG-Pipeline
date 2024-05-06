@@ -1,7 +1,6 @@
-import sys, os
+import sys
 sys.dont_write_bytecode = True
 
-import pandas as pd
 import streamlit as st
 import numpy as np
 

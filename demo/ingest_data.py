@@ -3,7 +3,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_community.vectorstores.faiss import DistanceStrategy
 from langchain_community.document_loaders import DataFrameLoader
-from langchain_community.embeddings import HuggingFaceEmbeddings
 
 DATA_PATH = "../data/main-data/synthetic-resumes.csv"
 FAISS_PATH = "../vectorstore"

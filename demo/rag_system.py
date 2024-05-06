@@ -1,11 +1,5 @@
-import sys, httpx, os
+import sys
 sys.dont_write_bytecode = True
-
-import pandas as pd
-from langchain_community.vectorstores import FAISS
-from langchain_community.vectorstores.faiss import DistanceStrategy
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from llm_agent import ChatBot
 
 
 DATA_PATH = "./data/main-data/synthetic-resumes.csv"
@@ -14,7 +8,6 @@ RAG_K_THRESHOLD = 5
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 LLM_MODEL = "gpt-35-turbo"
 OPENAI_ENDPOINT = "https://aalto-openai-apigw.azure-api.net"
-OPENAI_KEY = ""
 
 
 class RAGPipeline():
