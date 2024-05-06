@@ -10,7 +10,7 @@ The demo interface of the chatbot can be found here: https://resume-screening-ra
 
 **Warning: the file uploader is still quite unstable in Streamlit deployment. I don't recommend using it.**
 
-![Screenshot_118](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/11c78009-af1e-4cab-9617-2a16e618e7d3)
+![Screenshot_121](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/b585d5da-0e19-4f70-8735-19f18b83080c)
 
 ![Screenshot_119](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/991aee26-af7c-440f-b050-f5789aff3d84)
 
