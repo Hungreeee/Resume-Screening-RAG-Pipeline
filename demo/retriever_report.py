@@ -8,7 +8,7 @@ import numpy as np
 def render(document_list: list, id_list: dict):
   retriever_message = st.expander(f"Click to see retriever's report 📄")
   with retriever_message:
-    st.markdown("#### Most similar resumes")
+    st.markdown("#### Retrieval results")
     button_columns = st.columns([0.2, 0.2, 0.2, 0.2, 0.2], gap="small")
     for index, document in enumerate(np.array(document_list)[:5]):
       with button_columns[index], st.popover(f"Resume {index + 1}"):

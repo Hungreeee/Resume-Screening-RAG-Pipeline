@@ -4,6 +4,7 @@ sys.dont_write_bytecode = True
 import pandas as pd
 import streamlit as st
 import openai
+from streamlit_modal import Modal
 
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_community.vectorstores import FAISS
@@ -13,7 +14,6 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from llm_agent import ChatBot
 from ingest_data import ingest
 from rag_system import RAGPipeline
-
 import retriever_report
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -22,12 +22,7 @@ sys.path.append(os.path.dirname(CURRENT_DIR))
 
 DATA_PATH = CURRENT_DIR + "/../data/main-data/synthetic-resumes.csv"
 FAISS_PATH = CURRENT_DIR + "/../vectorstore"
-RAG_K_THRESHOLD = 5
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-LLM_MODEL = "gpt-35-turbo"
-OPENAI_ENDPOINT = "https://aalto-openai-apigw.azure-api.net"
-OPENAI_KEY = ""
-
 
 welcome_message = """
 #### Introduction 🚀
@@ -35,7 +30,7 @@ welcome_message = """
 The system is a RAG pipeline designed to assist hiring managers in searching for the most suitable candidates out of hundreds of resumes more effectively. ⚡
 
 The idea is to use a similarity retriever to identify the most suitable applicants with job descriptions.
-This data is then augmented into an LLM generator for downstream tasks like analysis, summarization, or decision-making. 
+This data is then augmented into an LLM generator for downstream tasks such as analysis, summarization, and decision-making. 
 
 #### Getting started 🛠️
 
@@ -65,16 +60,23 @@ FYI, the temperature is currently set at `0.1` and the top-K is set at `5`.
 
 ### 3. Is my uploaded data safe? 
 
-Your data is not being recorded or stored anyhow by the program. Everything is stored in this session state and will be removed once you refresh the app. 
+Your data is not being stored anyhow by the program. Everything is recorded in a Streamlit session state and will be removed once you refresh the app. 
 
-However, it must be mentioned that the **uploaded data are being processed directly into OpenAI's GPT**, which I do not have control over. 
-As such, it is highly recommended to use the default resumes provided by the program or use made-up data. 
+However, it must be mentioned that the **uploaded data will be processed directly by OpenAI's GPT**, which I do not have control over. 
+As such, it is highly recommended to use the default synthetic resumes provided by the program. 
+
+### 4. How does the chatbot work? 
+
+The Chatbot works a bit differently to the original structure proposed in the paper so that it is more usable in practical use cases.
+
+For example, the system classifies the intent of every single user prompt to know whether it is appropriate to toggle RAG retrieval on/off. 
+The system also records the chat history and chooses to use it in certain cases, allowing users to ask follow-up questions or tasks on the retrieved resumes.
 """
 
 about_message = """
 # About
 
-The program is a simple prototype designed out of pure interest as additional work for the author's Bachelor's thesis project. 
+This small program is a prototype designed out of pure interest as additional work for the author's Bachelor's thesis project. 
 The aim of the project is to propose and prove the effectiveness of RAG-based models in resume screening, thus inspiring more research into this field.
 
 The program is very much a work in progress. I really appreciate any contribution or feedback on [GitHub](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline).
@@ -83,8 +85,8 @@ If you are interested, please don't hesitate to give me a star. ⭐
 """
 
 
-st.set_page_config(page_title="Resume Screening Bot")
-st.title("Resume Screening Bot")
+st.set_page_config(page_title="Resume Screening Chatbot")
+st.title("Resume Screening Chatbot")
 
 if "chat_history" not in st.session_state:
   st.session_state.chat_history = [AIMessage(content=welcome_message)]
@@ -102,17 +104,29 @@ if "rag_pipeline" not in st.session_state:
 if "resume_list" not in st.session_state:
   st.session_state.resume_list = []
 
+modal = Modal(key="Demo Key", title="File Error", max_width=500)
 
 def upload_file():
-  with st.toast('Loading the uploaded file. This can take a while...'):
-    if st.session_state.uploaded_file != None:
-      st.session_state.df = pd.read_csv(st.session_state.uploaded_file)
-      vectordb = ingest(st.session_state.df, "Resume", st.session_state.embedding_model)
-      st.session_state.rag_pipeline = RAGPipeline(vectordb, st.session_state.df)
+  if st.session_state.uploaded_file != None:
+    try:  
+      df_load = pd.read_csv(st.session_state.uploaded_file)
+    except Exception as error:
+      with modal.container():
+        st.markdown("The uploaded file returns the following error message. Please check your csv file again.")
+        st.error(error)
     else:
-      st.session_state.df = pd.read_csv(DATA_PATH)
-      vectordb = FAISS.load_local(FAISS_PATH, st.session_state.embedding_model, distance_strategy=DistanceStrategy.COSINE)
-      st.session_state.rag_pipeline = RAGPipeline(vectordb, st.session_state.df)
+      if "Resume" not in df_load.columns or "ID" not in df_load.columns:
+        with modal.container():
+          st.error("Please include the following columns in your data: \"Resume\", \"ID\".")
+      else:
+        with st.toast('Indexing the uploaded data. This may take a while...'):
+          st.session_state.df = df_load
+          vectordb = ingest(st.session_state.df, "Resume", st.session_state.embedding_model)
+          st.session_state.rag_pipeline = RAGPipeline(vectordb, st.session_state.df)
+  else:
+    st.session_state.df = pd.read_csv(DATA_PATH)
+    vectordb = FAISS.load_local(FAISS_PATH, st.session_state.embedding_model, distance_strategy=DistanceStrategy.COSINE)
+    st.session_state.rag_pipeline = RAGPipeline(vectordb, st.session_state.df)
 
 def check_openai_api_key(api_key: str):
   openai.api_key = api_key
@@ -129,6 +143,7 @@ def check_model_name(model_name: str, api_key: str):
   return True if model_name in model_list else False
 
 def clear_message():
+  st.session_state.resume_list = []
   st.session_state.chat_history = [AIMessage(content=welcome_message)]
 
 user_query = st.chat_input("Type your message here...")
@@ -181,14 +196,13 @@ llm = ChatBot(
 rag_pipeline = st.session_state.rag_pipeline
 
 if user_query is not None and user_query != "":
-  st.session_state.chat_history.append(HumanMessage(content=user_query))
 
   with st.chat_message("Human"):
     st.markdown(user_query)
+    st.session_state.chat_history.append(HumanMessage(content=user_query))
 
   with st.chat_message("AI"):
     query_type = llm.query_classification(user_query)
-    print(query_type)
 
     if query_type == "1":
       subquestion_list = llm.generate_subquestions(user_query) if st.session_state.rag_selection == "RAG Fusion" else [user_query]
