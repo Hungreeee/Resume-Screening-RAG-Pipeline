@@ -8,7 +8,7 @@ Link to paper: [Google Drive](https://drive.google.com/file/d/1hg6wD1FWvdNfbqqGj
 
 ## Demo
 
-The demo interface of the chatbot can be found here: https://resume-screening-rag-gpt.streamlit.app
+The demo interface of the chatbot can be found here: [Streamlit](https://resume-screening-rag-gpt.streamlit.app)
 
 **Warning: the file uploader is still quite unstable in Streamlit deployment. I don't recommend using it.**
 
