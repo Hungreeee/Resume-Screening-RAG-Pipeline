@@ -1,5 +1,3 @@
-# RAG-based Resume Screening Chatbot   
-
 ## Introduction
 
 The project is a proof of concept (POC) of an LLM-based assistant to help hiring managers screen resumes more efficiently. The key design integrates Retrieval Augmented Generation (RAG) Fusion to effectively retrieve the top matching resumes from a large pool of applicants for a job description. This data is then augmented into the LLM for downstream tasks like analysis, summarization, or decision-making. 
