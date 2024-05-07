@@ -4,6 +4,8 @@
 
 The project is a proof of concept (POC) of an LLM-based assistant to help hiring managers screen resumes more efficiently. The key design integrates Retrieval Augmented Generation (RAG) Fusion to effectively retrieve the top matching resumes from a large pool of applicants for a job description. This data is then augmented into the LLM for downstream tasks like analysis, summarization, or decision-making. 
 
+Link to paper: [Google Drive](https://drive.google.com/file/d/1hg6wD1FWvdNfbqqGj9fT0r93ZHgCEmoQ/view?usp=sharing)
+
 ## Demo
 
 The demo interface of the chatbot can be found here: https://resume-screening-rag-gpt.streamlit.app
