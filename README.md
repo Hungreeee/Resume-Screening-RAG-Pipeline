@@ -1,8 +1,23 @@
+# Resume Screening RAG Pipeline
+
 ## Introduction
 
-The project is a proof of concept (POC) of an LLM-based assistant to help hiring managers screen resumes more efficiently. The key design integrates Retrieval Augmented Generation (RAG) Fusion to effectively retrieve the top matching resumes from a large pool of applicants for a job description. This data is then augmented into the LLM for downstream tasks like analysis, summarization, or decision-making. 
+The project is a proof of concept for an LLM assistant aiming to assist hiring managers in resume screening. The core design of the assistant involves the use of Retrieval Augmented Generation (RAG) Fusion:
 
-Link to paper: [Google Drive](https://drive.google.com/file/d/1hg6wD1FWvdNfbqqGj9fT0r93ZHgCEmoQ/view?usp=sharing)
+1. Retrieval: When a job description is provided, the retriever searches for similar resumes. This is done to narrow the pool of applicants to the most relevant profiles.
+2. Generation: The retrieved resumes are then used to augment the LLM generator so it is conditioned on the data of the top applicants for the job description. The generator can then be used for further downstream tasks like analysis, summarization, or decision-making.
+
+#### Why resume screening?
+
+Despite the increasingly large volume of applicants each year, there are limited tools that can assist the screening process effectively and reliably. Existing methods often revolve around keyword-based approaches, which cannot accurately handle the complexity of natural language in human-written documents. Because of this, there is a clear opportunity to integrate LLM-based methods into this domain, which the project aims to address. 
+
+#### Why RAG / RAG Fusion? 
+
+RAG-like frameworks are great tools to enhance the reliability of chatbots. Overall, RAG aims to provide an external knowledge base for LLM agents, allowing them to receive additional context relevant to user queries. This increases the relevance and accuracy of the generated answers, which is especially important in data-intensive environments such as the recruitment domain.
+
+On the other hand, RAG Fusion is effective in addressing complex and ambiguous human-written prompts. While the LLM generator can handle this problem effectively, the retriever may struggle to find relevant documents when presented with multifaceted queries. Therefore, this method can be used to improve resume retrieval quality when the system receives complex job descriptions (which are quite common in hiring).
+
+For more info, please refer to the paper: [Google Drive](https://drive.google.com/file/d/1hg6wD1FWvdNfbqqGj9fT0r93ZHgCEmoQ/view?usp=sharing)
 
 ## Demo
 
@@ -23,7 +38,7 @@ The system uses RAG Fusion, an advanced RAG framework that combines generative a
 The process begins by processing resumes into a vector storage. Upon receiving the input job descriptions query, the LLM agent is prompted to generate sub-queries. The vector storage then performs a retrieval process for each given query to return the top-K most similar documents. The document list for each sub-query is then combined and re-ranked into a new list, representing the most similar documents to the original job description. The LLM then utilizes the retrieved applicants' information as context to form accurate, relevant, and informative responses to assist hiring managers in matching resumes with job descriptions.
 
 Tech stacks: 
-- `langchain`, `openai`: Chatbot construction.
+- `langchain`, `openai`, `huggingface`: Chatbot construction.
 - `faiss`: Vector indexing and similarity retrieval.
 - `streamlit`: Chatbot interface development.
 
