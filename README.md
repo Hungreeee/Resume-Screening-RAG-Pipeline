@@ -25,8 +25,10 @@ The demo interface of the chatbot can be found here: [Streamlit](https://resume-
 
 **Warning: the file uploader is still quite unstable in Streamlit deployment. I don't recommend using it.**
 
+Starting screen:
 ![Screenshot_121](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/b585d5da-0e19-4f70-8735-19f18b83080c)
 
+The system's example response when receiving a job description: 
 ![Screenshot_119](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/991aee26-af7c-440f-b050-f5789aff3d84)
 
 ## Pipeline Structure
