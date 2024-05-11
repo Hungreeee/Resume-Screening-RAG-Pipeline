@@ -52,8 +52,8 @@ The process begins by processing resumes into a vector storage. Upon receiving t
 In addition to the original RAG pipeline, the deployed chatbot utilizes certain techniques to be more suitable for real-world use cases:
 
 - Chat history access: The LLM is fed with the entire conversation and the (latest) retrieved documents for every message, allowing it to perform follow-up tasks. 
-- Query classification: The LLM checks whether the query contains a job description to toggle RAG on/off. The system only performs RAG when an appropriate query is fed. Otherwise, it is directly fed with the chat history to address follow-up queries.
-- Small-to-Big retrieval: Retrieve documents with text chunks. Augment generator with full-text documents.
+- Query classification: The LLM checks whether the query contains a job description to toggle RAG on/off. The system only performs RAG when a suitable query is fed. Otherwise, it is directly fed with the chat history to address follow-up prompts.
+- Small-to-Big retrieval: The retrieval process is performed using text chunks for efficiency. The retrieved chunks are then traced back to their original full-text documents to augment the LLM generator, allowing the generator to receive the complete context of the resumes. 
 
 **Tech stacks:** 
 - `langchain`, `openai`, `huggingface`: RAG pipeline and chatbot construction.
