@@ -18,7 +18,7 @@ RAG-like frameworks are great tools to enhance the reliability of chatbots. Over
 On the other hand, RAG Fusion is effective in addressing complex and ambiguous human-written prompts. While the LLM generator can handle this problem effectively, the retriever may struggle to find relevant documents when presented with multifaceted queries. Therefore, this technique can be used to improve resume retrieval quality when the system receives complex job descriptions (which are quite common in hiring).
 
 > [!NOTE]
-> For more info, please refer to the paper: [Google Drive](https://drive.google.com/file/d/1hg6wD1FWvdNfbqqGj9fT0r93ZHgCEmoQ/view?usp=sharing)
+> For more info, please refer to the paper: [Google Drive](https://drive.google.com/drive/folders/19pL-MNfPUVsxePHd8FDvddnoC3S_zNFN?usp=drive_link)
 
 ## Demo
 
