@@ -78,7 +78,7 @@ streamlit run demo/interface.py
 
 ## Contributions
 
-The design of the deployed chatbot is relatively simple because it only serves to show the bigger picture of the potential of RAG-like systems in the recruitment domain. As such, the system is still very much a work in progress and any suggestion/contribution is highly appreciated! Please share them at [Issue](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/issues). 
+The design of the deployed chatbot is relatively simple because it only serves to show the bigger picture of the potential of RAG-like systems in the recruitment domain. As such, the system is still very much a work in progress and any suggestion, feedback, or contribution is highly appreciated! Please share them at [Issue](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/issues). 
 
 ## Acknowledgement
 
