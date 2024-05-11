@@ -23,26 +23,40 @@ For more info, please refer to the paper: [Google Drive](https://drive.google.co
 
 The demo interface of the chatbot can be found here: [Streamlit](https://resume-screening-rag-gpt.streamlit.app)
 
-**Warning: the file uploader is still quite unstable in Streamlit deployment. I don't recommend using it.**
+**Warning: the file uploader is still quite unstable in Streamlit deployment. I do not recommend using it.**
 
-Starting screen:
+> Starting screen
+
 ![Screenshot_121](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/b585d5da-0e19-4f70-8735-19f18b83080c)
 
-The system's example response when receiving a job description: 
+> The system's example response when receiving a job description
+
 ![Screenshot_119](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/991aee26-af7c-440f-b050-f5789aff3d84)
 
-## Pipeline Structure
+## Structure
 
-The system uses RAG Fusion, an advanced RAG framework that combines generative agents and similarity-based retrieval methods to enhance answer quality. This is particularly useful in resume screening, where queries often contain complex and multifaceted job requirements.
+### 1. RAG Pipeline Structure
 
 ![system-structure](https://github.com/Hungreeee/Resume-Screening-LLM-RAG/assets/46376260/b108cbda-81fa-495c-b2a6-c3a279310bf6)
 
 The process begins by processing resumes into a vector storage. Upon receiving the input job descriptions query, the LLM agent is prompted to generate sub-queries. The vector storage then performs a retrieval process for each given query to return the top-K most similar documents. The document list for each sub-query is then combined and re-ranked into a new list, representing the most similar documents to the original job description. The LLM then utilizes the retrieved applicants' information as context to form accurate, relevant, and informative responses to assist hiring managers in matching resumes with job descriptions.
 
+### 2. Chatbot Structure
+
+\[Image here...\]
+
+In addition to the original RAG pipeline, the deployed chatbot uses certain techniques to be more suitable for real-world use cases:
+
+- Query classification: Toggle RAG on/off. Only performs RAG when an appropriate query is fed. 
+- Small to big retrieval: Retrieve documents with text chunks. Augment generator with full-text documents.
+- Chat history access: Allow the LLM agent to perform follow-up tasks.
+
+\[To be continued...\]
+
 Tech stacks: 
-- `langchain`, `openai`, `huggingface`: Chatbot construction.
+- `langchain`, `openai`, `huggingface`: RAG pipeline and chatbot construction.
 - `faiss`: Vector indexing and similarity retrieval.
-- `streamlit`: Chatbot interface development.
+- `streamlit`: User interface development.
 
 ## Installation and Setup
 
