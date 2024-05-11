@@ -74,4 +74,4 @@ streamlit run demo/interface.py
 
 ## Contributions
 
-It should be noted that the design of the existing chatbot (direct application of RAG Fusion with some small improvement) is simply a POC, which only serves to show the bigger picture of the potential of such RAG-like systems in the recruitment domain. The program is very much a work in progress so any suggestion/contribution is highly appreciated! Please share them at [Issue](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/issues). 
+It should be noted that the design of the existing chatbot is relatively simple because it only serves to show the bigger picture of the potential of RAG-like systems in the recruitment domain. As such, the system is still very much a work in progress and any suggestion/contribution is highly appreciated! Please share them at [Issue](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/issues). 
