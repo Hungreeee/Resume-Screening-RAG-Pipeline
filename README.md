@@ -51,7 +51,7 @@ In addition to the original RAG pipeline, the deployed chatbot utilizes certain 
 - Query classification: The LLM checks whether the query contains a job description to toggle RAG on/off. The system only performs RAG when an appropriate query is fed. Otherwise, it is directly fed with the chat history to address follow-up queries.
 - Small-to-Big retrieval: Retrieve documents with text chunks. Augment generator with full-text documents.
 
-Tech stacks: 
+**Tech stacks:** 
 - `langchain`, `openai`, `huggingface`: RAG pipeline and chatbot construction.
 - `faiss`: Vector indexing and similarity retrieval.
 - `streamlit`: User interface development.
