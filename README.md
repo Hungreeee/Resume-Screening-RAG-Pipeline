@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The research is part of the author's graduating thesis. It aims to propose a POC of an LLM assistant that can assist hiring managers in resume screening. The core design of the assistant involves the use of Retrieval Augmented Generation (RAG) Fusion:
+The research is part of the author's graduating thesis. It presents a POC of an LLM assistant that can assist hiring managers in resume screening. The core design of the assistant involves the use of Retrieval Augmented Generation (RAG) Fusion:
 
 1. Retrieval: When a job description is provided, the retriever searches for similar resumes. This is done to narrow the pool of applicants to the most relevant profiles.
 2. Generation: The retrieved resumes are then used to augment the LLM generator so it is conditioned on the data of the top applicants given the job description. The generator can then be used for further downstream tasks like analysis, summarization, or decision-making.
