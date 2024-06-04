@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The research is part of the author's graduating thesis. It presents a POC of an LLM assistant that can help hiring managers screen resumes more effectively. The assistant is a fast, cost-efficient, and user-friendly solution to resume screening. Powered by state-of-the-art LLMs, it can handle unstructured and complex natural language data in job descriptions/resumes while performing high-level tasks as effectively as a human recruiter.  
+The research is part of the author's graduating thesis, which aims to present a POC of an LLM assistant that can support the resume screening process. The assistant is a cost-efficient, user-friendly, and more effective alternative to the conventional keyword-based screening methods. Powered by state-of-the-art LLMs, it can handle unstructured and complex natural language data in job descriptions/resumes while performing high-level tasks as effectively as a human recruiter.  
 
 The core design of the assistant involves the use of hybrid retrieval methods to augment the LLM agent with knowledge of the suitable applicants:
 
