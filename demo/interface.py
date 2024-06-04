@@ -29,7 +29,7 @@ EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 welcome_message = """
   #### Introduction 🚀
 
-  The system is a RAG pipeline designed to assist hiring managers in searching for the most suitable candidates out of hundreds of resumes more effectively. ⚡
+  The system is a RAG pipeline designed to assist hiring managers in searching for the most suitable candidates out of thousands of resumes more effectively. ⚡
 
   The idea is to use a similarity retriever to identify the most suitable applicants with job descriptions.
   This data is then augmented into an LLM generator for downstream tasks such as analysis, summarization, and decision-making. 
@@ -39,7 +39,7 @@ welcome_message = """
   1. To set up, please add your OpenAI's API key. 🔑 
   2. Type in a job description query. 💬
 
-  Hint: The knowledge base of the LLM has been loaded with a pre-existing vectorstore of resumes to be used right away. 
+  Hint: The knowledge base of the LLM has been loaded with a pre-existing vectorstore of [resumes](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/blob/main/data/main-data/synthetic-resumes.csv) to be used right away. 
   In addition, you may also find example job descriptions to test [here](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/blob/main/data/supplementary-data/job_title_des.csv).
 
   Please make sure to check the sidebar for more useful information. 💡
