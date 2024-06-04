@@ -1,7 +1,7 @@
 import sys, httpx
 sys.dont_write_bytecode = True
 
-from langchain_openai import ChatOpenAI
+from langchain_openai.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 
 
@@ -13,31 +13,13 @@ LLM_MODEL = "gpt-35-turbo"
 CUSTOMED_ENDPOINT = "https://aalto-openai-apigw.azure-api.net"
 
 
-def update_base_url(request: httpx.Request):
-  if request.url.path == "/chat/completions":
-    request.url = request.url.copy_with(path="/v1/chat")
-
-
 class ChatBot():
-
-  def __init__(self, api_key: str, model: str, type: str = "openai"):
+  def __init__(self, api_key: str, model: str):
     self.llm = ChatOpenAI(
       model=model, 
       api_key=api_key, 
       temperature=0.1
     )
-      
-    if type == "customed":
-      self.llm = ChatOpenAI(
-        default_headers={"Ocp-Apim-Subscription-Key": api_key},
-        base_url=CUSTOMED_ENDPOINT,
-        api_key=False,
-        http_client=httpx.Client(
-          event_hooks={
-            "request": [update_base_url],
-        }),
-        temperature=0.1
-      )
 
 
   def generate_subquestions(self, question: str):
@@ -122,13 +104,14 @@ class ChatBot():
     """)
 
     response = self.llm.invoke([system_message, oneshot_example, oneshot_response, user_message])
-    return response.content
+    result = response.content.split("\n\n")
+    return result
   
 
-  def generate_message_stream(self, question: str, docs: list, history: list, type: str):
+  def generate_message_stream(self, question: str, docs: list, history: list, prompt_cls: str):
     context = "\n\n".join(doc for doc in docs)
     
-    if type == "1":
+    if prompt_cls == "retrieve_applicant_jd":
       system_message = SystemMessage(content="""
         You are an expert in talent acquisition that helps determine the best candidate among multiple suitable resumes.
         Use the following pieces of context to determine the best resume given a job description. 
@@ -157,21 +140,4 @@ class ChatBot():
       """)
 
     stream = self.llm.stream([system_message, user_message])
-
     return stream
-
-
-  def query_classification(self, question: str):
-    system_message = SystemMessage(content="""
-      Classify the user's prompt into one of the following two categories: 
-        1. Complete job description with job requirements and details
-        2. Other
-      Do not include any character or punctuation in your answer. Only respond with a number to indicate your classification. 
-    """)
-
-    user_message = HumanMessage(content=f"""
-      Prompt: {question}
-    """)
-
-    response = self.llm.invoke([system_message, user_message])
-    return response.content[0]
