@@ -6,7 +6,7 @@ The research is part of the author's graduating thesis, which aims to present a 
 
 The core design of the assistant involves the use of hybrid retrieval methods to augment the LLM agent with suitable resumes as context:
 
-1. Retrieval:
+1. Adaptive Retrieval:
    - Similarity-based retrieval: When a job description is provided, the retriever utilizes RAG/RAG Fusion to search for similar resumes to narrow the pool of applicants to the most relevant profiles.
    - Keyword-based retrieval: When applicant information is provided (IDs), the retriever can also retrieve additional information about specified candidates.
 3. Generation: The retrieved resumes are then used to augment the LLM generator so it is conditioned on the data of the retrieved applicants. The generator can then be used for further downstream tasks like cross-comparisons, analysis, summarization, or decision-making.
