@@ -4,11 +4,11 @@
 
 The research is part of the author's graduating thesis, which aims to present a POC of an LLM chatbot that can assist hiring managers in the resume screening process. The assistant is a cost-efficient, user-friendly, and more effective alternative to the conventional keyword-based screening methods. Powered by state-of-the-art LLMs, it can handle unstructured and complex natural language data in job descriptions/resumes while performing high-level tasks as effectively as a human recruiter.  
 
-The core design of the assistant involves the use of hybrid retrieval methods to augment the LLM agent with knowledge of the suitable applicants:
+The core design of the assistant involves the use of hybrid retrieval methods to augment the LLM agent with suitable resumes as context:
 
 1. Retrieval:
    - Similarity-based retrieval: When a job description is provided, the retriever utilizes RAG/RAG Fusion to search for similar resumes to narrow the pool of applicants to the most relevant profiles.
-   - Generic keyword-based retrieval: When applicant information is provided (IDs), the retriever can also retrieve additional information about specified candidates.
+   - Keyword-based retrieval: When applicant information is provided (IDs), the retriever can also retrieve additional information about specified candidates.
 3. Generation: The retrieved resumes are then used to augment the LLM generator so it is conditioned on the data of the retrieved applicants. The generator can then be used for further downstream tasks like cross-comparisons, analysis, summarization, or decision-making.
 
 #### Why resume screening?
@@ -51,12 +51,12 @@ Source job description dataset: [Kaggle](https://www.kaggle.com/datasets/kshitiz
 
 ### 1. Chatbot Structure
 
-[Image here]
+![chatbot-structure](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/c35ff90c-9202-49f0-9b25-153a27ea3363)
 
-In addition to the original RAG pipeline, the deployed chatbot utilizes certain techniques to be more suitable for real-world use cases:
+The deployed chatbot utilizes certain techniques to be more suitable for real-world use cases:
 
 - Chat history access: The LLM is fed with the entire conversation and the (latest) retrieved documents for every message, allowing it to perform follow-up tasks. 
-- Query classification: Utilizing function-calling, the LLM extracts the necessary information to decide whether to toggle the retrieval process on or off. In other words, the system only performs document retrieval when a suitable input query is provided; otherwise, it will only utilize the chat history to answer.
+- Query classification: Utilizing function-calling, the LLM extracts the necessary information to decide whether to toggle the retrieval process on/off. In other words, the system only performs document retrieval when a suitable input query is provided; otherwise, it will only utilize the chat history to answer.
 - Small-to-Big retrieval: The retrieval process is performed using text chunks for efficiency. The retrieved chunks are then traced back to their original full-text documents to augment the LLM generator, allowing the generator to receive the complete context of the resumes. 
 
 **Tech stacks:** 
