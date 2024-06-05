@@ -66,7 +66,7 @@ The deployed chatbot utilizes certain techniques to be more suitable for real-wo
 
 ### 2. Under-the-hood RAG Pipeline 
 
-![system-structure](https://github.com/Hungreeee/Resume-Screening-LLM-RAG/assets/46376260/b108cbda-81fa-495c-b2a6-c3a279310bf6)
+![Encoder](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/fe4cc10a-89a3-44f2-a77d-43b5209d4301)
 
 The pipeline begins by processing resumes into a vector storage. Upon receiving the input job descriptions query, the LLM agent is prompted to generate sub-queries. The vector storage then performs a retrieval process for each given query to return the top-K most similar documents. The document list for each sub-query is then combined and re-ranked into a new list, representing the most similar documents to the original job description. The LLM then utilizes the retrieved applicants' information as context to form accurate, relevant, and informative responses to assist hiring managers in matching resumes with job descriptions.
 
