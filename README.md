@@ -56,7 +56,7 @@ Source job description dataset: [Kaggle](https://www.kaggle.com/datasets/kshitiz
 The deployed chatbot utilizes certain techniques to be more suitable for real-world use cases:
 
 - Chat history access: The LLM is fed with the entire conversation and the (latest) retrieved documents for every message, allowing it to perform follow-up tasks. 
-- Query classification: Utilizing function-calling, the LLM extracts the necessary information to decide whether to toggle the retrieval process on/off. In other words, the system only performs document retrieval when a suitable input query is provided; otherwise, it will only utilize the chat history to answer.
+- Query classification: Utilizing function-calling and an adaptive approach, the LLM extracts the necessary information to decide whether to toggle the retrieval process on/off. In other words, the system only performs document retrieval when a suitable input query is provided; otherwise, it will only utilize the chat history to answer.
 - Small-to-Big retrieval: The retrieval process is performed using text chunks for efficiency. The retrieved chunks are then traced back to their original full-text documents to augment the LLM generator, allowing the generator to receive the complete context of the resumes. 
 
 **Tech stacks:** 
