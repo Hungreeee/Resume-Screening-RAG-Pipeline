@@ -51,7 +51,7 @@ Source job description dataset: [Kaggle](https://www.kaggle.com/datasets/kshitiz
 
 ### 1. Chatbot Structure
 
-![chatbot-structure](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/c35ff90c-9202-49f0-9b25-153a27ea3363)
+![Encoder](https://github.com/Hungreeee/Resume-Screening-RAG-Pipeline/assets/46376260/e01d13a5-a0e8-4c76-a2bf-3c69b552079d)
 
 The deployed chatbot utilizes certain techniques to be more suitable for real-world use cases:
 
