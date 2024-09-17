@@ -137,7 +137,12 @@ def upload_file():
 def check_openai_api_key(api_key: str):
   openai.api_key = api_key
   try:
-    openai.models.list()
+    _ = openai.chat.completions.create(
+      model="gpt-4o-mini",  # Use a model you have access to
+      messages=[{"role": "user", "content": "Hello!"}],
+      max_tokens=3
+    )
+    return True
   except openai.AuthenticationError as e:
     return False
   else:
@@ -163,7 +168,7 @@ with st.sidebar:
 
   st.text_input("OpenAI's API Key", type="password", key="api_key")
   st.selectbox("RAG Mode", ["Generic RAG", "RAG Fusion"], placeholder="Generic RAG", key="rag_selection")
-  st.text_input("GPT Model", "gpt-3.5-turbo", key="gpt_selection")
+  st.text_input("GPT Model", "gpt-4o-mini", key="gpt_selection")
   st.file_uploader("Upload resumes", type=["csv"], key="uploaded_file", on_change=upload_file)
   st.button("Clear conversation", on_click=clear_message)
 
