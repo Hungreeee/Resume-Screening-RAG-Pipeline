@@ -1,6 +1,9 @@
 import sys, os
 sys.dont_write_bytecode = True
 
+import time
+from dotenv import load_dotenv
+
 import pandas as pd
 import streamlit as st
 import openai
@@ -16,15 +19,11 @@ from ingest_data import ingest
 from retriever import SelfQueryRetriever
 import chatbot_verbosity as chatbot_verbosity
 
-import time
+load_dotenv()
 
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.dirname(CURRENT_DIR))
-
-
-DATA_PATH = CURRENT_DIR + "/../data/main-data/synthetic-resumes.csv"
-FAISS_PATH = CURRENT_DIR + "/../vectorstore"
-EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+DATA_PATH = os.getenv("DATA_PATH")
+FAISS_PATH = os.getenv("FAISS_PATH")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL")
 
 welcome_message = """
   #### Introduction 🚀

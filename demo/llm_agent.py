@@ -21,7 +21,6 @@ class ChatBot():
       temperature=0.1
     )
 
-
   def generate_subquestions(self, question: str):
     system_message = SystemMessage(content="""
       You are an expert in talent acquisition. Separate this job description into 3-4 more focused aspects for efficient resume retrieval. 
@@ -106,7 +105,6 @@ class ChatBot():
     response = self.llm.invoke([system_message, oneshot_example, oneshot_response, user_message])
     result = response.content.split("\n\n")
     return result
-  
 
   def generate_message_stream(self, question: str, docs: list, history: list, prompt_cls: str):
     context = "\n\n".join(doc for doc in docs)
@@ -121,6 +119,7 @@ class ChatBot():
       """)
 
       user_message = HumanMessage(content=f"""
+        Chat history: {history}
         Context: {context}
         Question: {question}
       """)
