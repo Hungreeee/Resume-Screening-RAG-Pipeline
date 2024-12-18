@@ -1,14 +1,18 @@
-import sys, httpx
+import sys, httpx, os
 sys.dont_write_bytecode = True
+
+from dotenv import load_dotenv
 
 from langchain_openai.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 
 
-DATA_PATH = "./data/main-data/synthetic-resumes.csv"
-FAISS_PATH = "./vectorstore"
+load_dotenv()
+
+DATA_PATH = os.getenv("DATA_PATH")
+FAISS_PATH = os.getenv("FAISS_PATH")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL")
 RAG_K_THRESHOLD = 5
-EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 LLM_MODEL = "gpt-35-turbo"
 CUSTOMED_ENDPOINT = "https://aalto-openai-apigw.azure-api.net"
 

@@ -1,10 +1,10 @@
-import sys, json
+import sys
 sys.dont_write_bytecode = True
 
 import streamlit as st
 import numpy as np
 
-def render(document_list: list, meta_data: dict, time_elapsed):
+def render(document_list: list, meta_data: dict, time_elapsed: float):
   retriever_message = st.expander(f"Verbosity")
   message_map = {
     "retrieve_applicant_jd": "**A job description is detected**. The system defaults to using RAG.",

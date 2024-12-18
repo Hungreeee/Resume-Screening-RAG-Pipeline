@@ -25,6 +25,9 @@ DATA_PATH = os.getenv("DATA_PATH")
 FAISS_PATH = os.getenv("FAISS_PATH")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL")
 
+print(DATA_PATH)
+print(FAISS_PATH)
+
 welcome_message = """
   #### Introduction 🚀
 
